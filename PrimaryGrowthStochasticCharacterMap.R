@@ -111,7 +111,7 @@ pruned_chronogram<-ladderize(pruned_chronogram, F )
 class(pruned_chronogram)<-"phylo"
 
 #Primary growth character evolution
-primary<-read.delim("primary.txt" , sep = "\t", row.names = 1)
+primary<-read.delim("PrimaryGrowth_Data.txt" , sep = "\t", row.names = 1)
 primary<-setNames(primary[,1],rownames(primary))
 
 #fit the primary growth data model of evolution to the tree  -ASR
