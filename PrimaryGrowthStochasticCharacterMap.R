@@ -131,4 +131,3 @@ densityTree(ER_100,method="plotSimmap",lwd=7,nodes="intermediate",
 add.simmap.legend(colors=cols,prompt=FALSE,x=90, y=90 )
 describe.simmap(ER_100)
 countSimmap(ER_100)
-describe.simmap(er)
