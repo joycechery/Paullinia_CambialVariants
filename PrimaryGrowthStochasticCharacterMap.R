@@ -1,6 +1,5 @@
 library(geiger)
 library(phytools)
-library(RColorBrewer)
 
 #load in trees and data (tab delimited file)
 setwd("/Users/joycechery/Desktop/Science/PNAS/New_Analysis/")
