@@ -111,7 +111,7 @@ pruned_chronogram<-ladderize(pruned_chronogram, F )
 class(pruned_chronogram)<-"phylo"
 
 ##Secondary growth haracter evolution
-mature<-read.delim("Paullinia_maturewood.txt" , sep = "\t", row.names = 1)
+mature<-read.delim("MatureGrowth_Data.txt" , sep = "\t", row.names = 1)
 mature<-setNames(mature[,1],rownames(mature))
 
 #model test
