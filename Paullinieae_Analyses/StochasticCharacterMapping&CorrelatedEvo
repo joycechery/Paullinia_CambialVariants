@@ -201,11 +201,11 @@ pruned_chronogram<-ladderize(pruned_chronogram, F )
 class(pruned_chronogram)<-"phylo"
 
 #import primary body shape and mature stem type data
-X<-read.delim("Paullinieae_Primary.txt" , sep = "\t", row.names = 1)
+X<-read.delim("Paullinieae_PrimaryGrowthData" , sep = "\t", row.names = 1)
 primary<-setNames(X[,1],rownames(X))
 primary
 
-Y<-read.delim("Paullinieae_Secondary.txt" , sep = "\t", row.names = 1)
+Y<-read.delim("Paullinieae_SecondaryGrowthData" , sep = "\t", row.names = 1)
 mature<-setNames(Y[,1],rownames(Y))
 mature
 
