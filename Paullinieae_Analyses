@@ -1,0 +1,237 @@
+library(geiger)
+library(phytools)
+library(RColorBrewer)
+
+#load in trees and data (tab delimited file)
+setwd("/Users/joycechery/Desktop/Science/PNAS/New_Analysis/")
+tree <- read.nexus("infile.nex.run1_run6Mfrontandremovedrunswithsplitfreq02andmoreMburninRemoved_mcc.tre")
+tree2<- root(tree, "Matayba_guianensis", resolve.root=TRUE)
+tree2$edge.length <- tree2$edge.length * 6596
+chronogram <- chronos(tree2, lambda=0.5, model="relaxed", control= chronos.control())
+
+#pruned tree
+species <- c("Allophylus africanus" 
+             ,"Allophylus_arboreus" 
+             ,"Allophylus_bicruris" 
+             ,"Allophylus_bojerianus" 
+             ,"Allophylus_chaunostachys" 
+             ,"Allophylus_chirindensis" 
+             ,"Allophylus_comina" 
+             ,"Allophylus_crassinervis" 
+             ,"Allophylus_decipiens" 
+             ,"Allophylus_dissectus" 
+             ,"Allophylus_gardineri" 
+             ,"Allophylus_hirtellus" 
+             ,"Allophylus_leucoclados" 
+             ,"Allophylus_pervillei" 
+             ,"Allophylus_petiolulatus" 
+             ,"Allophylus_poungouensis" 
+             ,"Allophylus_psilospermus_a" 
+             ,"Allophylus_pslisospermus_b" 
+             ,"Allophylus_racemosus" 
+             ,"Allophylus_rubifolius" 
+             ,"Allophylus_semidentatus" 
+             ,"Allophylus_sp._a" 
+             ,"Athyana_weinnmanniifolia_a" 
+             ,"Athyana_weinnmanniifolia_b" 
+             ,"Bridgesia_incisiifolia" 
+             ,"Cardiospermum_anomalum" 
+             ,"Cardiospermum_bahianum" 
+             ,"Cardiospermum_corindum_a" 
+             ,"Cardiospermum_corindum_b" 
+             ,"Cardiospermum_corindum_c" 
+             ,"Cardiospermum_grandiflorum_a" 
+             ,"Cardiospermum_grandiflorum_b" 
+             ,"Cardiospermum_grandiflorum_c" 
+             ,"Cardiospermum_halicacabum_a" 
+             ,"Cardiospermum_halicacabum_b" 
+             ,"Cardiospermum_halicacabum_c" 
+             ,"Cardiospermum_halicacabum_d" 
+             ,"Cardiospermum_heringeri" 
+             ,"Cardiospermum_pechuelii" 
+             ,"Lophostigma_plumosum_a" 
+             ,"Lophostigma_plumosum_b" 
+             ,"Lophostigma_plumosum_c" 
+             ,"Paullinia_acutangula_a" 
+             ,"Paullinia_acutangula_b" 
+             ,"Paullinia_alata_a" 
+             ,"Paullinia_alata_b" 
+             ,"Paullinia_alata_c" 
+             ,"Paullinia_alata_d" 
+             ,"Paullinia_allenii_a" 
+             ,"Paullinia_allenii_b" 
+             ,"Paullinia_alsmithii_a" 
+             ,"Paullinia_alsmithii_b" 
+             ,"Paullinia_baileyi_a" 
+             ,"Paullinia_baileyi_b" 
+             ,"Paullinia_bilobulata" 
+             ,"Paullinia_boliviana_a" 
+             ,"Paullinia_bracteosa_b" 
+             ,"Paullinia_bracteosa_c" 
+             ,"Paullinia_bracteosa_d" 
+             ,"Paullinia_caloptera_a" 
+             ,"Paullinia_carpopoda_a" 
+             ,"Paullinia_carpopoda_b" 
+             ,"Paullinia_carpopoda_c" 
+             ,"Paullinia_cf.boliviana_b" 
+             ,"Paullinia_cf.nobilis" 
+             ,"Paullinia_cf.stellata_a" 
+             ,"Paullinia_clathrata_a" 
+             ,"Paullinia_costaricensis" 
+             ,"Paullinia_dasystachya" 
+             ,"Paullinia_elegans" 
+             ,"Paullinia_elongata_a" 
+             ,"Paullinia_elongata_b" 
+             ,"Paullinia_eriocarpa" 
+             ,"Paullinia_exalata" 
+             ,"Paullinia_faginea" 
+             ,"Paullinia_fibrigera_a" 
+             ,"Paullinia_fibrigera_b" 
+             ,"Paullinia_fimbriata" 
+             ,"Paullinia_fuscescens_a" 
+             ,"Paullinia_fuscescens_b" 
+             ,"Paullinia_glomerulosa_a" 
+             ,"Paullinia_glomerulosa_b" 
+             ,"Paullinia_hystrix_a" 
+             ,"Paullinia_hystrix_b" 
+             ,"Paullinia_hystrix_c" 
+             ,"Paullinia_hystrix_d" 
+             ,"Paullinia_imberbis" 
+             ,"Paullinia_ingifolia_a" 
+             ,"Paullinia_ingifolia_b" 
+             ,"Paullinia_ingifolia_c" 
+             ,"Paullinia_ingifolia_d" 
+             ,"Paullinia_jamaicensis" 
+             ,"Paullinia_josecuatrii" 
+             ,"Paullinia_killipii_a" 
+             ,"Paullinia_killipii_b" 
+             ,"Paullinia_largifolia" 
+             ,"Paullinia_latifolia_a" 
+             ,"Paullinia_leiocarpa" 
+             ,"Paullinia_microneura" 
+             ,"Paullinia_neglecta_a" 
+             ,"Paullinia_neglecta_b" 
+             ,"Paullinia_obovata_a" 
+             ,"Paullinia_obovata_b" 
+             ,"Paullinia_olivacea" 
+             ,"Paullinia_paullinoides_a" 
+             ,"Paullinia_paullinoides_b" 
+             ,"Paullinia_pinnata_a" 
+             ,"Paullinia_pinnata_b" 
+             ,"Paullinia_pinnata_c" 
+             ,"Paullinia_pinnata_d" 
+             ,"Paullinia_pseudota_a" 
+             ,"Paullinia_pseudota_b" 
+             ,"Paullinia_pseudota_c" 
+             ,"Paullinia_rubiginosa_a" 
+             ,"Paullinia_rubiginosa_b" 
+             ,"Paullinia_rubiginosa.subsp.setosa" 
+             ,"Paullinia_rufescens" 
+             ,"Paullinia_rugosa_a" 
+             ,"Paullinia_rugosa_b" 
+             ,"Paullinia_rugosa_c" 
+             ,"Paullinia_selenoptera" 
+             ,"Paullinia_serjaniifolia" 
+             ,"Paullinia_simulans" 
+             ,"Paullinia_sp._a" 
+             ,"Paullinia_sp._b" 
+             ,"Paullinia_sphaerocarpa" 
+             ,"Paullinia_spicata" 
+             ,"Paullinia_sprucei" 
+             ,"Paullinia_stellata_b" 
+             ,"Paullinia_stipitata_a" 
+             ,"Paullinia_stipitata_b" 
+             ,"Paullinia_tomentosa" 
+             ,"Paullinia_trigonia" 
+             ,"Paullinia_turbacensis_a" 
+             ,"Paullinia_turbacensis_b" 
+             ,"Paullinia_turbacensis_c" 
+             ,"Paullinia_turbacensis_d" 
+             ,"Serjania_atrolineata_a" 
+             ,"Serjania_atrolineata_b" 
+             ,"Serjania_atrolineata_c" 
+             ,"Serjania_caracasana_a" 
+             ,"Serjania_cf.caracasana_b" 
+             ,"Serjania_circumvallata" 
+             ,"Serjania_clematidifolia" 
+             ,"Serjania_communis" 
+             ,"Serjania_cuspidata" 
+             ,"Serjania_deltoidea" 
+             ,"Serjania_diversifolia" 
+             ,"Serjania_elongata" 
+             ,"Serjania_erythrocaulis" 
+             ,"Serjania_fluminensis" 
+             ,"Serjania_fuscifolia" 
+             ,"Serjania_grandiceps" 
+             ,"Serjania_grandifolia" 
+             ,"Serjania_ichthyoctona" 
+             ,"Serjania_lethalis_a" 
+             ,"Serjania_lethalis_b" 
+             ,"Serjania_marginata" 
+             ,"Serjania_membranacea_a" 
+             ,"Serjania_membranacea_b" 
+             ,"Serjania_mexicana_a" 
+             ,"Serjania_mexicana_b" 
+             ,"Serjania_mexicana_c" 
+             ,"Serjania_mexicana_d" 
+             ,"Serjania_paniculata" 
+             ,"Serjania_paucidentata" 
+             ,"Serjania_perulacea" 
+             ,"Serjania_pyramidata_a" 
+             ,"Serjania_pyramidata_b" 
+             ,"Serjania_reticulata" 
+             ,"Serjania_rhombea" 
+             ,"Serjania_salzmanniana" 
+             ,"Serjania_trachygona" 
+             ,"Serjania_unguiculata" 
+             ,"Thinouia_mucronata_a" 
+             ,"Thinouia_mucronata_b" 
+             ,"Thinouia_restingae" 
+             ,"Thouinia_acuminata" 
+             ,"Thouinia_paucidentata" 
+             ,"Thouinia_portoricensis" 
+             ,"Thouinia_villosa" 
+             ,"Urvillea_chacoensis_a" 
+             ,"Urvillea_chacoensis_b" 
+             ,"Urvillea_ulmacea_a" 
+             ,"Urvillea_ulmacea_b" 
+             ,"Urvillea_ulmacea_c")
+pruned_chronogram<-drop.tip(chronogram,chronogram$tip.label[!(chronogram$tip.label %in% species)])
+pruned_chronogram<-ladderize(pruned_chronogram, F )
+class(pruned_chronogram)<-"phylo"
+
+#import primary body shape and mature stem type data
+X<-read.delim("Paullinieae_Primary.txt" , sep = "\t", row.names = 1)
+primary<-setNames(X[,1],rownames(X))
+primary
+
+Y<-read.delim("Paullinieae_Secondary.txt" , sep = "\t", row.names = 1)
+mature<-setNames(Y[,1],rownames(Y))
+mature
+
+#model fit for primary growth
+er<-make.simmap(pruned_chronogram, primary, model ="ER", pi="estimated")
+ard<-make.simmap(pruned_chronogram, primary, model ="ARD", pi="estimated")
+1-pchisq(2*abs(ard$logL- er$logL), 1 )
+ER_100_P<-make.simmap(pruned_chronogram, primary, model ="ER", nsim=100, pi="estimated")
+densityTree(ER_100_P,method="plotSimmap",lwd=3,nodes="intermediate", 
+            colors=cols,ylim=c(5,180),compute.consensus=FALSE,
+            fsize=.55, show.axis = F, direction="rightwards")
+describe.simmap(ER_100_P)
+countSimmap(ER_100_P)
+
+#model fit for mature growth
+er<-make.simmap(pruned_chronogram, mature, model ="ER", pi="estimated")
+ard<-make.simmap(pruned_chronogram, mature, model ="ARD", pi="estimated")
+1-pchisq(2*abs(ard$logL- er$logL), 1 )
+ER_100_M<-make.simmap(pruned_chronogram, mature, model ="ER", nsim=100, pi="estimated")
+densityTree(ER_100_M,method="plotSimmap",lwd=3,nodes="intermediate", 
+            colors=cols,ylim=c(5,180),compute.consensus=FALSE,
+            fsize=.55, show.axis = F, direction="lefttwards")
+describe.simmap(ER_100_M)
+countSimmap(ER_100_M)
+
+#test of correlated evolution
+modelresults_full<-fitPagel(pruned_chronogram, x=primary, y=mature, model = "ER", dep.var = "y")
+
+
