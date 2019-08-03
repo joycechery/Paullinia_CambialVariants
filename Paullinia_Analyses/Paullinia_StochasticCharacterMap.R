@@ -111,7 +111,7 @@ pruned_chronogram<-ladderize(pruned_chronogram, F )
 class(pruned_chronogram)<-"phylo"
 
 #Primary growth character evolution
-primary<-read.delim("PrimaryGrowth_Data.txt" , sep = "\t", row.names = 1)
+primary<-read.delim("Paullinia_PrimaryGrowth_Data" , sep = "\t", row.names = 1)
 primary<-setNames(primary[,1],rownames(primary))
 
 #fit the primary growth data model of evolution to the tree  -ASR
@@ -134,7 +134,7 @@ countSimmap(ER_100)
 
 ########################
 ##Secondary growth Character evolution
-mature<-read.delim("MatureGrowth_Data.txt" , sep = "\t", row.names = 1)
+mature<-read.delim("Paullinia_SecondaryGrowthData" , sep = "\t", row.names = 1)
 mature<-setNames(mature[,1],rownames(mature))
 
 #model test
