@@ -17,9 +17,9 @@ Paullinia_bracteosa_b	1
 Paullinia_bracteosa_c	1
 Paullinia_bracteosa_d	1
 Paullinia_caloptera_a	1
-Paullinia_carpopodea_a	0
-Paullinia_carpopodea_b	0
-Paullinia_carpopodea_c	0
+Paullinia_carpopoda_a	0
+Paullinia_carpopoda_b	0
+Paullinia_carpopoda_c	0
 Paullinia_cf.boliviana_b	2
 Paullinia_cf.nobilis	1
 Paullinia_cf.stellata_a	1
