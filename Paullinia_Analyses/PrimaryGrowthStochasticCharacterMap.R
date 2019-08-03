@@ -131,3 +131,31 @@ densityTree(ER_100,method="plotSimmap",lwd=7,nodes="intermediate",
 add.simmap.legend(colors=cols,prompt=FALSE,x=90, y=90 )
 describe.simmap(ER_100)
 countSimmap(ER_100)
+
+########################
+##Secondary growth Character evolution
+mature<-read.delim("MatureGrowth_Data.txt" , sep = "\t", row.names = 1)
+mature<-setNames(mature[,1],rownames(mature))
+
+#model test
+er<-make.simmap(pruned_chronogram, mature, model ="ER", pi="estimated")  
+sym<-make.simmap(pruned_chronogram, mature, model ="SYM", pi="estimated")
+ard<-make.simmap(pruned_chronogram, mature, model ="ARD", pi="estimated")
+1-pchisq(2*abs(sym$logL- er$logL), 9)
+1-pchisq(2*abs(ard$logL- sym$logL), 10)
+#Sym is better yall
+
+#regularI, rehularII, phloem wedges, lobed, compound successive cambia
+colrs<-c("black", "steelblue3", "gold","orangered2","maroon3")
+cols<-setNames((colrs)[1:length(unique(mature))],sort(unique(mature)))
+
+#simmulate characters 100 times.
+SYM_100<-make.simmap(pruned_chronogram, mature, model ="SYM", nsim=100, pi="estimated")
+colrs<-c("black", "steelblue3", "gold","orangered2","maroon3")
+cols<-setNames((colrs)[1:length(unique(mature))],sort(unique(mature)))
+densityTree(SYM_100,method="plotSimmap",lwd=7,nodes="intermediate", 
+            colors=cols,ylim=c(3,92),compute.consensus=FALSE,
+            fsize=.65, show.axis = F, direction="rightwards", offset=TRUE )
+add.simmap.legend(colors=cols,prompt=FALSE,y=90, )
+describe.simmap(SYM_100)
+countSimmap(SYM_100)
