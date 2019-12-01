@@ -1,4 +1,4 @@
-#0=regular, 1=phloem wedges, 2=lobed, 3=compound, 4=successive cambia
+Species Data(0=regular,1=phloem wedges,2=lobed,3=compound,4=successive cambia)
 Paullinia_acutangula_a	1
 Paullinia_acutangula_b	1
 Paullinia_alata_a	3
@@ -94,4 +94,3 @@ Paullinia_turbacensis_a	1
 Paullinia_turbacensis_b	1
 Paullinia_turbacensis_c	1
 Paullinia_turbacensis_d	1
-Paullinia_acutangula_a	1
