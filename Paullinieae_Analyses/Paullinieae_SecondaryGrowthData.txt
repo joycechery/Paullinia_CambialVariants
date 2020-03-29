@@ -1,4 +1,5 @@
 Paullinieae_SecondaryGrowthData
+Allophylus africanus	0
 Allophylus_arboreus	0
 Allophylus_bicruris	0
 Allophylus_bojerianus	0
