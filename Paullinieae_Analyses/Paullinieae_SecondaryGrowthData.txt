@@ -1,4 +1,4 @@
-Paullinieae_SecondaryGrowthData
+Paullinieae_SecondaryGrowthData(0=regular; 1=variant)
 Allophylus africanus	0
 Allophylus_arboreus	0
 Allophylus_bicruris	0
