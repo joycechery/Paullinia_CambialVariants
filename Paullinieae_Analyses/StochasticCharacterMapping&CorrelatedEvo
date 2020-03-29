@@ -3,6 +3,7 @@ library(phytools)
 library(RColorBrewer)
 
 #load in trees and data (tab delimited file)
+setwd("/Users/joycechery/Downloads/doi_10.6078_D11X18__v6/")
 tree <- read.nexus("Paullinieae_BayesianMaximumCladeCredibilityTrees.tre")
 tree2<- root(tree, "Matayba_guianensis", resolve.root=TRUE)
 tree2$edge.length <- tree2$edge.length * 6596
@@ -200,11 +201,11 @@ pruned_chronogram<-ladderize(pruned_chronogram, F )
 class(pruned_chronogram)<-"phylo"
 
 #import primary body shape and mature stem type data
-X<-read.delim("Paullinieae_PrimaryGrowthData" , sep = "\t", row.names = 1)
+X<-read.delim("Paullinieae_PrimaryGrowthData.txt" , sep = "\t", row.names = 1)
 primary<-setNames(X[,1],rownames(X))
 primary
 
-Y<-read.delim("Paullinieae_SecondaryGrowthData" , sep = "\t", row.names = 1)
+Y<-read.delim("Paullinieae_SecondaryGrowthData.txt" , sep = "\t", row.names = 1)
 mature<-setNames(Y[,1],rownames(Y))
 mature
 
@@ -212,25 +213,33 @@ mature
 er<-make.simmap(pruned_chronogram, primary, model ="ER", pi="estimated")
 ard<-make.simmap(pruned_chronogram, primary, model ="ARD", pi="estimated")
 1-pchisq(2*abs(ard$logL- er$logL), 1 )
+
+#likelihood ratio test
 ER_100_P<-make.simmap(pruned_chronogram, primary, model ="ER", nsim=100, pi="estimated")
-densityTree(ER_100_P,method="plotSimmap",lwd=3,nodes="intermediate", 
-            colors=cols,ylim=c(5,180),compute.consensus=FALSE,
+colrs<-c("black", "red")
+cols<-setNames((colrs)[1:length(unique(primary))],sort(unique(primary)))
+
+densityTree(ER_100_P,method="plotSimmap",lwd=3,nodes="intermediate",colors = cols, 
+            ylim=c(5,180),compute.consensus=FALSE,
             fsize=.55, show.axis = F, direction="rightwards")
+
 describe.simmap(ER_100_P)
 countSimmap(ER_100_P)
 
-#model fit for mature growth
+#model fit for mature growth & stochastic character mapping
 er<-make.simmap(pruned_chronogram, mature, model ="ER", pi="estimated")
 ard<-make.simmap(pruned_chronogram, mature, model ="ARD", pi="estimated")
 1-pchisq(2*abs(ard$logL- er$logL), 1 )
+
 ER_100_M<-make.simmap(pruned_chronogram, mature, model ="ER", nsim=100, pi="estimated")
+
 densityTree(ER_100_M,method="plotSimmap",lwd=3,nodes="intermediate", 
-            colors=cols,ylim=c(5,180),compute.consensus=FALSE,
+            colors= cols,ylim=c(5,180),compute.consensus=FALSE,
             fsize=.55, show.axis = F, direction="lefttwards")
+
 describe.simmap(ER_100_M)
 countSimmap(ER_100_M)
 
-#test of correlated evolution
+#pagels test of correlated evolution
 modelresults_full<-fitPagel(pruned_chronogram, x=primary, y=mature, model = "ER", dep.var = "y")
-
-
+modelresults_full
