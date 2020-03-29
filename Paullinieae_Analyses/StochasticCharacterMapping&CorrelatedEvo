@@ -3,8 +3,7 @@ library(phytools)
 library(RColorBrewer)
 
 #load in trees and data (tab delimited file)
-setwd("/Users/joycechery/Desktop/Science/PNAS/New_Analysis/")
-tree <- read.nexus("infile.nex.run1_run6Mfrontandremovedrunswithsplitfreq02andmoreMburninRemoved_mcc.tre")
+tree <- read.nexus("Paullinieae_BayesianMaximumCladeCredibilityTrees.tre")
 tree2<- root(tree, "Matayba_guianensis", resolve.root=TRUE)
 tree2$edge.length <- tree2$edge.length * 6596
 chronogram <- chronos(tree2, lambda=0.5, model="relaxed", control= chronos.control())
