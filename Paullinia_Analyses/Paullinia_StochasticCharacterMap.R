@@ -2,8 +2,8 @@ library(geiger)
 library(phytools)
 
 #load in trees and data (tab delimited file)
-setwd("/Users/joycechery/Desktop/Science/PNAS/New_Analysis/")
-tree <- read.nexus("infile.nex.run1_run6Mfrontandremovedrunswithsplitfreq02andmoreMburninRemoved_mcc.tre")
+setwd("/Users/joycechery/Downloads/doi_10.6078_D11X18__v6/")
+tree <- read.nexus("Paullinieae_BayesianMaximumCladeCredibilityTrees.tre")
 tree2<- root(tree, "Matayba_guianensis", resolve.root=TRUE)
 tree2$edge.length <- tree2$edge.length * 6596
 chronogram <- chronos(tree2, lambda=0.5, model="relaxed", control= chronos.control())
@@ -111,30 +111,31 @@ pruned_chronogram<-ladderize(pruned_chronogram, F )
 class(pruned_chronogram)<-"phylo"
 
 #Primary growth character evolution
-primary<-read.delim("Paullinia_PrimaryGrowth_Data" , sep = "\t", row.names = 1)
+primary<-read.delim("Paullinia_PrimaryGrowth_Data.txt" , sep = "\t", row.names = 1)
 primary<-setNames(primary[,1],rownames(primary))
 
 #fit the primary growth data model of evolution to the tree  -ASR
 er<-make.simmap(pruned_chronogram, primary, model ="ER", pi="estimated")  #$1df
-sym<-make.simmap(pruned_chronogram, primary, model ="SYM", pi="estimated")#15
-ard<-make.simmap(pruned_chronogram, primary, model ="ARD", pi="estimated") #30
+ard<-make.simmap(pruned_chronogram, primary, model ="ARD", pi="estimated") #2df
 1-pchisq(2*abs(ard$logL- er$logL), 1)
-#ER is prefer yall.
+#ER is preferred yall.
 
 #simulate character history
 colrs<-c("black", "olivedrab4")
 cols<-setNames((colrs)[1:length(unique(primary))],sort(unique(primary)))
 ER_100<-make.simmap(pruned_chronogram, primary, model ="ER", nsim=100, pi="estimated")
+
 densityTree(ER_100,method="plotSimmap",lwd=7,nodes="intermediate", 
             colors=cols,ylim=c(3,92),compute.consensus=FALSE,
             fsize=.65, show.axis = F, direction="rightwards")
+
 add.simmap.legend(colors=cols,prompt=FALSE,x=90, y=90 )
 describe.simmap(ER_100)
 countSimmap(ER_100)
 
 ########################
 ##Secondary growth Character evolution
-mature<-read.delim("Paullinia_SecondaryGrowthData" , sep = "\t", row.names = 1)
+mature<-read.delim("Paullinia_SecondaryGrowthData.txt" , sep = "\t", row.names = 1)
 mature<-setNames(mature[,1],rownames(mature))
 
 #model test
