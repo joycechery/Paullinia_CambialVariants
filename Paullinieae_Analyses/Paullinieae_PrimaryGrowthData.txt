@@ -1,4 +1,4 @@
-Paullinieae_PrimaryGrowthData
+Paullinieae_PrimaryGrowthData(0=circular; 1=lobed)
 Allophylus africanus	0
 Allophylus_arboreus	0
 Allophylus_bicruris	0
